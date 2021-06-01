@@ -147,7 +147,7 @@ def integrate(func, x0, x1, tol):
         n_intervals = [math.ceil(int((x1 - x0) / h_opt)) * L ** s for s in range(3)]
         compos_h = [composite_quad(func, x0, x1, interval, n_nodes) for interval in n_intervals]
         m = aitken(*compos_h, L)
-        error = runge(*compos_h[1:], m, L)[0]
-        h_opt = compos_h[2] * (tol / error) ** (1 / m)
+        error = runge(*compos_h[:-1], m, L)[0]
+        h_opt = compos_h[0] * (tol / error) ** (1 / m)
         print(n_intervals)
-    return compos_h[2], error
+    return compos_h[0], error
